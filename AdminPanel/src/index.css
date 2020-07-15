@@ -1,11 +1,16 @@
+/* 
+color paletee: 
+https://coolors.co/16697a-489fb5-82c0cc-ede7e3-ffa62b
+
+*/
 body {
 margin: 0;
 padding: 0;
 font-family: sans-serif;
-background: #1289A7;
+background: #ede7e3;
 }
 button{
-    background: rgb(28, 184, 65);
+    background: rgb(255, 166, 43);
     color: white;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -16,27 +21,53 @@ button{
     border: transparent;
     text-decoration: none;
 }
+.textChatInput {
+    height: 25px;
+    width: 75%;
+}
+
 tr{
     height: 30px;
 }
+.tableChats {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+    position: center;
+    /*border: 1px solid black;*/
+    /*margin-left: auto;
+    margin-right: auto;*/
+    margin-top:0px;
+    color: #222;
+}
+.columnChatsUsername {
+    font-size: smaller;
+}
+.columnChatsMessage {
+    text-align: left;
+}
+.columnChatsTime {
+    font-size: smaller;
+}
+
 .tabelsa{
-font-weight: bold;
-border: none;
-border-collapse: collapse;
-position: center;
-/*border: 1px solid black;*/
-/*margin-left: auto;
-margin-right: auto;*/
-margin-top:0px;
-width: 100%;
-color: #222;
+    font-weight: bold;
+    border: none;
+    border-collapse: collapse;
+    position: center;
+    /*border: 1px solid black;*/
+    /*margin-left: auto;
+    margin-right: auto;*/
+    margin-top:0px;
+    width: 100%;
+    color: #222;
 }
 
 .jsonOdd {
-    background: #EE5A24;
+    background: #ede7e3;
 }
 .jsonEven{
-    background: #F79F1F;
+    background: #ede7e3;
 }
 .mm-popup {
 display: none;

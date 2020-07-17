@@ -26,3 +26,10 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+video {
+  width: 640px;
+  height: 480px;
+  border: 2px solid #16697a;
+  border-radius: 3px;
+}

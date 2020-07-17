@@ -17,11 +17,12 @@ class ChatContent extends React.Component{
 		this.state = {
 			chatMessages: [],
 			inputMessage: '',
-			course: 0
+			course: 3
 		};
 
 		this.handleInputChange = this.handleInputChange.bind(this)
 	}
+
 	tableSettings = {
 		header: false,
 		cellClass: (currentClass, columnKey, rowData) => {
@@ -50,7 +51,7 @@ class ChatContent extends React.Component{
 	}];
 
 	handleInputChange(event) {
-  		this.setState({inputMessage: event.target.value});
+		this.setState({inputMessage: event.target.value});
 	}
 
 	componentDidMount(){
@@ -62,7 +63,7 @@ class ChatContent extends React.Component{
 		let self = this;
 
 		API.graphql(
-			graphqlOperation(chatMessagesByCourse, { course: 0 })
+			graphqlOperation(chatMessagesByCourse, { course: this.state.course })
 		).then(response => {
 			
 			let chats = response.data.chatMessagesByCourse.items;
@@ -100,6 +101,13 @@ class ChatContent extends React.Component{
 		})
 	}
 
+	//Catch the <enter> key
+	evalKeyPress = (event) => {
+		if (event.keyCode === 13) {
+            this.onSendCell();
+        }
+	}
+
 	onSendCell = (event) => {
 		if (this.state.inputMessage.length > 0) {
 
@@ -130,7 +138,7 @@ class ChatContent extends React.Component{
 		return (
 			<div className="containerChat">
 				<JsonTable rows={this.state.chatMessages} columns={this.tableColumns} settings={this.tableSettings} className="tableChats" />
-				<div className="controllerChat"><input type="text" name="chatMessageInput" className="textChatInput" value={this.state.inputMessage} onChange={this.handleInputChange} /><button onClick={this.onSendCell}>Send</button></div>
+				<div className="controllerChat"><input type="text" name="chatMessageInput" className="textChatInput" value={this.state.inputMessage} onChange={this.handleInputChange}  onKeyDown={(e) => this.evalKeyPress(e) } /><button onClick={this.onSendCell}>Send</button></div>
 			</div>
 		);
 	}
@@ -138,12 +146,64 @@ class ChatContent extends React.Component{
 
 class VideoContent extends React.Component {
 
+	constructor(props){
+		super(props);
+		this.state = {
+
+		};
+	}
 
 
+	constraints = window.constraints = {
+		audio: false,
+		video: true
+	  };
+
+	handleSuccess = (stream) => {
+		//debugger;
+		const video = document.getElementById('localVideo');
+		const videoTracks = stream.getVideoTracks();
+		console.log('Got stream with constraints:', this.constraints);
+		console.log(`Using video device: ${videoTracks[0].label}`);
+		window.stream = stream; // make variable available to browser console
+		video.srcObject = stream;
+	  }
+
+	showVideo = (event) => {
+
+		navigator.mediaDevices.getUserMedia(this.constraints).
+			then ((stream) => {
+				this.handleSuccess(stream);
+			}).catch((err) => {
+				console.log(err);
+			});
+
+	}
+
+	hideVideo = (event) => {
+
+		if(window.stream){
+			window.stream.getTracks().forEach(function(track) {
+				if (track.readyState == 'live') {
+					track.stop();
+				}
+			});
+
+			const video = document.getElementById('localVideo');
+			video.srcObject = null;
+		}
+	}
+
+	componentDidMount(){
+
+	}
 
 	render() {
 		return (
-			<div></div>
+			<div>
+				<div><video name="localVideo" id="localVideo" autoPlay playsInline ></video></div>
+				<div><button name="showVideo" onClick={this.showVideo}>Open Camera</button><button  name="hideVideo" onClick={this.hideVideo}>Close Camera</button></div>
+			</div>
 		);
 	}
 }

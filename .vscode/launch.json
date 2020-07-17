@@ -5,13 +5,28 @@
     //npm: start - AdminPanel
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome (localhost)",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/src"
-        }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch my Lambda",
+            "program": "/usr/local/bin/amplify",
+            "args": [
+              "function",
+              "invoke",
+             // replace this with the name of your function
+             // the folder in amplify/backend/function/
+              "chatMessageStreamLogger"
+            ],
+            "console": "integratedTerminal" 
+          }
     ]
 }
 
